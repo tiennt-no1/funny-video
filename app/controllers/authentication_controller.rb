@@ -8,10 +8,22 @@ class AuthenticationController < ApplicationController
       token = JsonWebToken.encode(user_id: @user.id)
       @user.tokens.create!(token: token)
       time = Time.now + 24.hours.to_i
-      render json: {token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                    username: @user.username}, status: :ok
+      respond_to do |format|
+        format.any do
+          session[:token] = token
+          redirect_to videos_path
+        end
+        format.json { render json: {token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
+                             username: @user.username}, status: :ok }
+      end
     else
-      render json: {error: 'unauthorized'}, status: :unauthorized
+
+      respond_to do |format|
+        format.any do
+          redirect_to auth_new_path
+        end
+        render json: {error: 'unauthorized'}, status: :unauthorized
+      end
     end
   end
 
