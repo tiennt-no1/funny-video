@@ -8,8 +8,7 @@ class ApplicationController < ActionController::Base
 
   def authorize_token
     header = request.headers['Authorization']
-    token = header.to_s.split(' ').last
-    token ||= session['Authorization']
+    header.to_s.split(' ').last
   end
 
   def authorize_request

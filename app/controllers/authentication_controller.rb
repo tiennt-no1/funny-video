@@ -10,17 +10,20 @@ class AuthenticationController < ApplicationController
       @user.tokens.create!(token: token)
       time = Time.now + 24.hours.to_i
       respond_to do |format|
-        format.any do
-          session['Authentication'] = token
-          redirect_to videos_path
+        format.json do
+          return render json: {token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
+                                    username: @user.username}, status: :ok
+
         end
-        format.json { render json: {token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                                    username: @user.username}, status: :ok }
+        format.any do
+          response.headers["Authorization"] = "Bearer #{token}"
+          render 'videos/index'
+        end
       end
     else
       respond_to do |format|
+        format.json { return render json: {error: 'unauthorized'}, status: :unauthorized }
         format.any { redirect_to auth_new_path }
-        format.json { render json: {error: 'unauthorized'}, status: :unauthorized }
       end
     end
   end
