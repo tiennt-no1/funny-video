@@ -6,14 +6,14 @@ class ApplicationController < ActionController::Base
     render json: { error: 'not_found' }
   end
 
-  def authorize_header
+  def authorize_token
     header = request.headers['Authorization']
-    return '' unless  header
-    header.split(' ').last
+    token = header.to_s.split(' ').last
+    token ||= session['Authorization']
   end
 
   def authorize_request
-    token = authorize_header
+    token = authorize_token
     begin
       Token.find_by!(token: token)
       @decoded = JsonWebToken.decode(token)

@@ -1,6 +1,7 @@
 class AuthenticationController < ApplicationController
 
-  def new_session; end
+  def new_session;
+  end
 
   def login
     @user = User.find_by!(username: params[:username])
@@ -10,19 +11,16 @@ class AuthenticationController < ApplicationController
       time = Time.now + 24.hours.to_i
       respond_to do |format|
         format.any do
-          session[:token] = token
+          session['Authentication'] = token
           redirect_to videos_path
         end
         format.json { render json: {token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                             username: @user.username}, status: :ok }
+                                    username: @user.username}, status: :ok }
       end
     else
-
       respond_to do |format|
-        format.any do
-          redirect_to auth_new_path
-        end
-        render json: {error: 'unauthorized'}, status: :unauthorized
+        format.any { redirect_to auth_new_path }
+        format.json { render json: {error: 'unauthorized'}, status: :unauthorized }
       end
     end
   end
