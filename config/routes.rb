@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   get '/*a', to: 'application#not_found'
 
 
-  resources 'videos', only: %i(index create)
+  resources 'videos', only: %i(index create new)
   root to: 'videos#index'
 end
