@@ -4,15 +4,15 @@ class AuthenticationController < ApplicationController
   end
 
   def login
-    @user = User.find_by!(username: params[:username])
-    if @user&.authenticate(params[:password])
-      token = JsonWebToken.encode(user_id: @user.id)
-      @user.tokens.create!(token: token)
+    @current_user = User.find_by!(username: params[:username])
+    if @current_user&.authenticate(params[:password])
+      token = JsonWebToken.encode(user_id: @current_user.id)
+      @current_user.tokens.create!(token: token)
       time = Time.now + 24.hours.to_i
       respond_to do |format|
         format.json do
           return render json: {token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                                    username: @user.username}, status: :ok
+                                    username: @current_user.username}, status: :ok
 
         end
         format.any do
