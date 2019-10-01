@@ -1,0 +1,16 @@
+<form class="new_user" id="new_user" action="/auth/login" accept-charset="UTF-8" method="post"><input type="hidden">
+  <div class="field">
+    <label for="username">Username</label><br>
+    <input autofocus="autofocus" autocomplete="username" type="email" name="username" id="username">
+  </div>
+
+  <div class="field">
+    <label for="password">Password</label><br>
+    <input autocomplete="off" type="password" name="password" id="password">
+  </div>
+  <div class="actions">
+    <input type="submit" name="commit" value="Log in" data-disable-with="Log in">
+  </div>
+
+  <%= link_to('Register', new_user_path) %>
+</form>
