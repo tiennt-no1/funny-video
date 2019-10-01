@@ -4,11 +4,17 @@ class ApplicationController < ActionController::Base
     render json: { error: 'not_found' }
   end
 
-  def authorize_request
+  def authorize_header
     header = request.headers['Authorization']
-    header = header.split(' ').last if header
+    return '' unless  header
+    header.split(' ').last
+  end
+
+  def authorize_request
+    token = authorize_header
     begin
-      @decoded = JsonWebToken.decode(header)
+      Token.find_by!(token: token)
+      @decoded = JsonWebToken.decode(token)
       @current_user = User.find(@decoded[:user_id])
     rescue ActiveRecord::RecordNotFound => e
       render json: { errors: e.message }, status: :unauthorized
