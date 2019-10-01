@@ -6,4 +6,5 @@ class User < ApplicationRecord
             if: -> { new_record? || !password.nil? }
 
   has_many :videos, foreign_key: :created_by
+  has_many :tokens
 end
