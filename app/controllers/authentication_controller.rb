@@ -1,6 +1,6 @@
 class AuthenticationController < ApplicationController
 
-  def new_session;
+  def new_session
   end
 
   def login
@@ -9,22 +9,10 @@ class AuthenticationController < ApplicationController
       token = JsonWebToken.encode(user_id: @current_user.id)
       @current_user.tokens.create!(token: token)
       time = Time.now + 24.hours.to_i
-      respond_to do |format|
-        format.json do
-          return render json: {token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                                    username: @current_user.username}, status: :ok
-
-        end
-        format.any do
-          response.headers["Authorization"] = "Bearer #{token}"
-          render 'videos/index'
-        end
-      end
+      render json: {token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
+                    username: @current_user.username}, status: :ok
     else
-      respond_to do |format|
-        format.json { return render json: {error: 'unauthorized'}, status: :unauthorized }
-        format.any { redirect_to auth_new_path }
-      end
+      render json: {error: 'unauthorized'}, status: :unauthorized
     end
   end
 
