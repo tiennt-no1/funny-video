@@ -1,16 +1,35 @@
+<h1> Log in</h1>
+
 <form class="new_user" id="new_user" action="/auth/login" accept-charset="UTF-8" method="post"><input type="hidden">
   <div class="field">
     <label for="username">Username</label><br>
-    <input autofocus="autofocus" autocomplete="username" type="email" name="username" id="username">
+    <input autofocus="autofocus" autocomplete="username" type="email" name="username" id="username" class="form-control">
   </div>
 
   <div class="field">
     <label for="password">Password</label><br>
-    <input autocomplete="off" type="password" name="password" id="password">
+    <input autocomplete="off" type="password" name="password" id="password" class="form-control">
   </div>
-  <div class="actions">
-    <input type="submit" name="commit" value="Log in" data-disable-with="Log in">
-  </div>
-
-  <%= link_to('Register', new_user_path) %>
+  <button type="button" name="commit" value="Log in" class="btn btn-success form-control my-2" id="login">Log in
+  </button>
+  <%= link_to('Register', new_user_path, class: "form-control btn btn-info") %>
 </form>
+
+<script type="text/javascript" charset="utf-8">
+    $("#login").on('click', () => {
+        $.ajax({
+            url: "/auth/login",
+            method: "post",
+            data: {
+                username: $("#username").val(),
+                password: $("#password").val()
+            }
+        }).done(function (response) {
+            Cookies.set("access-token", response.token);
+            window.location.replace('/videos')
+        }).fail(function () {
+            alert("error");
+        })
+
+    })
+</script>

@@ -1,0 +1,28 @@
+<form>
+  <div class="form-group">
+    <input type="url" class="form-control" id="youtubeUrl" placeholder="Insert Youtube URL">
+  </div>
+  <button type="button" class="btn btn-primary" id="shareYoutubeUrl">Share</button>
+</form>
+
+<script type="text/javascript" charset="utf-8">
+    $("#shareYoutubeUrl").on("click", () => {
+        let youtubeUrl = $("#youtubeUrl").val();
+        $.ajax({
+            headers: {
+                'Authorization': `Bearer ${Cookies.get('access-token')}`
+            },
+            url: "/videos.json",
+            method: "post",
+            data: {
+                youtube_url: youtubeUrl
+            }
+        }).done(function(response) {
+            $('#insertVideoModal').modal('hide');
+        })
+        .fail(function() {
+            alert( "error" );
+        })
+    })
+
+</script>
