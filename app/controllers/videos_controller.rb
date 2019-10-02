@@ -6,7 +6,8 @@ class VideosController < ApplicationController
   end
 
   def create
-    video = Video.create!(youtube_url: params.require(:youtube_url))
+
+    video = Video.create!(youtube_url: params.require(:youtube_url), user: @current_user)
     render json: {success: true, data: video}
   end
 end
