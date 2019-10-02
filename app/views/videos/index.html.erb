@@ -30,3 +30,8 @@
   </div>
 </nav>
 
+<div class="container">
+  <%- @videos.each do |video| %>
+    <%= render 'videos/show' %>
+  <% end %>
+</div>
