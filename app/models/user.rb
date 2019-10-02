@@ -7,4 +7,5 @@ class User < ApplicationRecord
 
   has_many :videos, foreign_key: :created_by
   has_many :tokens
+  has_many :votes
 end

@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   post '/auth/login', to: 'authentication#login'
   delete '/auth/logout', to: 'authentication#logout'
   get '/auth/new', to: 'authentication#new_session'
-  resources 'videos', only: %i(index create new)
+  resources 'videos', only: %i(index create new) do
+    member do
+      put :like
+      put :dislike
+    end
+  end
   root to: 'videos#index'
   get '/*a', to: 'application#not_found'
 end
