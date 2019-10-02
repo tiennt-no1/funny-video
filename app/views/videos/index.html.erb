@@ -63,21 +63,25 @@
     let likeable = event => {
         $this = $(event.target)
         $this.removeClass("fa-thumbs-o-up")
+        $this.removeClass("fa-thumbs-down")
         $this.addClass("fa-thumbs-up")
         $this.siblings().remove()
-        $this.on('click', dislikeable)
-        // let video_id = $this.parent().closest('div').attr('data')
-        // like(video_id)
+        $this.unbind('click', likeable)
+        $this.bind('click', dislikeable)
+        let video_id = $this.parent().closest('div').attr('data')
+        like(video_id)
     }
 
     let dislikeable = event => {
         $this = $(event.target)
         $this.removeClass("fa-thumbs-o-down")
+        $this.removeClass("fa-thumbs-up")
         $this.addClass("fa-thumbs-down")
         $this.siblings().remove()
-        $this.on('click', likeable)
-        // let video_id = $this.parent().closest('div').attr('data')
-        // dislike(video_id)
+        $this.unbind('click', dislikeable)
+        $this.bind('click', likeable)
+        let video_id = $this.parent().closest('div').attr('data')
+        dislike(video_id)
     }
 
     $("i.fa-thumbs-o-up").on('click', likeable)
