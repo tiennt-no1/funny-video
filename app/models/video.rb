@@ -1,7 +1,7 @@
 class Video < ApplicationRecord
   validates :youtube_url, presence: true, uniqueness: false
   belongs_to :user, foreign_key: :created_by
-  has_many votes
+  has_many :votes
 
   before_create :format_url
 
