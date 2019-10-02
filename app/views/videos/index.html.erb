@@ -42,7 +42,11 @@
         $.ajax({
             url: `/videos/${video_id}/like`,
             method: "put",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
+            }
         }).done(function (response) {
+            debugger
             alert("you liked video")
         }).fail(function () {
             alert("error");
@@ -53,6 +57,9 @@
         $.ajax({
             url: `/videos/${video_id}/dislike`,
             method: "put",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
+            }
         }).done(function (response) {
             alert("you disliked video")
         }).fail(function () {
@@ -84,8 +91,8 @@
         dislike(video_id)
     }
 
-    $("i.fa-thumbs-o-up").on('click', likeable)
-    $("i.fa-thumbs-o-down").on('click',dislikeable)
-    $("i.fa-thumbs-up").on('click',likeable)
-    $("i.fa-thumbs-down").on('click', dislikeable)
+    $("i.clickable.fa-thumbs-o-up").on('click', likeable)
+    $("i.clickable.fa-thumbs-o-down").on('click',dislikeable)
+    $("i.clickable.fa-thumbs-up").on('click',likeable)
+    $("i.clickable.fa-thumbs-down").on('click', dislikeable)
 </script>
