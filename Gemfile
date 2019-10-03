@@ -34,7 +34,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'pry'
   gem 'pry-nav'
-  gem 'rspec'
+  gem 'rspec-rails', '~> 3.6'
   gem 'factory_bot'
 
 end
