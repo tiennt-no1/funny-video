@@ -28,7 +28,6 @@
             Cookies.set("access-token", response.token);
             window.location.replace('/videos')
         }).fail(function (error) {
-            debugger
             let message = JSON.parse (error.responseText).errors
             Swal.fire({
                 type: 'error',
