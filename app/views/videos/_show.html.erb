@@ -8,8 +8,14 @@
     <h3>
       <%= video.title || 'Missing title' %>
       <span>
-        <i class="clickable fa fa-thumbs-o-up" aria-hidden="true"></i>
-        <i class="clickable fa fa-thumbs-o-down" aria-hidden="true"></i>
+        <%- if video.like_by_user(@current_user) %>
+          <i class="clickable fa fa-thumbs-up" aria-hidden="true"></i>
+        <%- elsif video.dislike_by_user(@current_user) %>
+          <i class="clickable fa fa-thumbs-down" aria-hidden="true"></i>
+        <%- else %>
+          <i class="clickable fa fa-thumbs-o-up" aria-hidden="true"></i>
+          <i class="clickable fa fa-thumbs-o-down" aria-hidden="true"></i>
+        <%- end %>
       </span>
     </h3>
     <h4> shared by <%= video.user.username %></h4>

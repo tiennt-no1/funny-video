@@ -5,6 +5,17 @@ class Video < ApplicationRecord
 
   before_create :format_url
 
+  def like_by_user(user)
+    user_id = user.is_a?(User) ? user.id : user
+    votes.where(user_id: user_id).like.present?
+  end
+
+  def dislike_by_user(user)
+    user_id = user.is_a?(User) ? user.id : user
+    votes.where(user_id: user_id).dislike.present?
+  end
+
+  private
   def get_youtube_id_from_url
     if youtube_url.include? '?'
       youtube_url.split('?').last.match(/v=([A-Za-z0-9]+)[&$]/)[1]
@@ -16,5 +27,6 @@ class Video < ApplicationRecord
   def format_url
     self.youtube_url = "https://www.youtube.com/embed/#{get_youtube_id_from_url}"
   end
+
 
 end
