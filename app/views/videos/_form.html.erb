@@ -37,15 +37,14 @@
             })
             location.reload(true)
 
-        })
-            .fail(function () {
-                Swal.fire({
-                    type: 'error',
-                    title: 'unexpected error',
-                    showConfirmButton: false,
-                    timer: 500
-                })
+        }).fail(function () {
+            Swal.fire({
+                type: 'error',
+                title: 'unexpected error',
+                showConfirmButton: false,
+                timer: 500
             })
+        })
     })
 
 </script>

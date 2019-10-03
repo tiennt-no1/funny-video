@@ -1,21 +1,49 @@
-<%= form_for(@user, url: users_path) do |f| %>
+<%= form_for(@user, html: {id: "new_user_form"}) do |f| %>
   <div class="field form-group">
-    <%= f.label :username %><br />
+    <%= f.label :username %><br/>
     <%= f.email_field :username, autofocus: true, autocomplete: "username", class: "form-control" %>
   </div>
 
   <div class="field form-group">
-    <%= f.label :password %><br />
+    <%= f.label :password %><br/>
     <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
   </div>
 
 
   <div class="field form-group">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation %><br/>
     <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Register", class: "btn btn-primary" %>
+    <%= f.submit "Register", class: "btn btn-primary", type: "button", id: "register" %>
   </div>
 <% end %>
+
+<script type="text/javascript" charset="utf-8">
+
+    $("#register").on('click', () => {
+        $.ajax({
+            url: "/users",
+            method: "post",
+            data: $('#new_user_form').serializeArray()
+        }).done(function (response) {
+            Swal.fire({
+                type: 'success',
+                title: 'successfully',
+                showConfirmButton: false,
+                timer: 500
+            })
+            location.reload(true)
+
+        }).fail(function (error) {
+            let messages = JSON.parse (error.responseText).errors
+            Swal.fire({
+                type: 'error',
+                title: messages[0],
+                showConfirmButton: false,
+                timer: 1000
+            })
+        })
+    })
+</script>

@@ -12,8 +12,10 @@ class AuthenticationController < ApplicationController
       render json: {token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
                     username: @current_user.username}, status: :ok
     else
-      render json: {error: 'unauthorized'}, status: :unauthorized
+      render json: {errors: 'Unauthorized'}, status: :unauthorized
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: {errors: 'Invalid username or password'}, status: :unauthorized
   end
 
   def logout
