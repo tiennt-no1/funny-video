@@ -18,22 +18,22 @@ ActiveRecord::Schema.define(version: 2019_10_02_144051) do
   create_table "tokens", force: :cascade do |t|
     t.string "token"
     t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "videos", force: :cascade do |t|
-    t.string "youtube_url"
+    t.string "youtube_url", default: ""
     t.integer "created_by"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "like"
     t.integer "dislike"
     t.string "title"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 2019_10_02_144051) do
     t.boolean "like", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["video_id"], name: "index_votes_on_video_id"
   end
 
 end
