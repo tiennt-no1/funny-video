@@ -9,7 +9,7 @@ FactoryBot.define do
   factory :video do
     youtube_url { "https://www.youtube.com/watch?v=g1jun_V1o2E" }
     title { Faker::Name.name }
-    desc { Faker::String.random }
+    desc { Faker::String.random(100) }
   end
 
   factory :token
