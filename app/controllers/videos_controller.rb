@@ -8,22 +8,25 @@ class VideosController < ApplicationController
   end
 
   def like
-    vote = @current_user.votes.create(video: @video)
+    vote = Vote.create(video: @video, user: @current_user)
     render json: {success: true, data: vote}
   end
 
   def dislike
-    @current_user.votes.delete_all
-    vote = @current_user.votes.create(video: @video, like: false)
+    vote = @current_user.votes.create(video: @video, like: false, user: @current_user)
     render json: {success: true, data: vote}
   end
 
   def create
-    video = Video.create!(youtube_url: params.require(:youtube_url), user: @current_user)
+    video = Video.create!(video_params.merge(created_by: @current_user.id))
     render json: {success: true, data: video}
   end
 
   private
+
+  def video_params
+    params.permit(:youtube_url, :desc, :title)
+  end
 
   def remove_all_votes
     @current_user.votes.where(video_id: params[:id]).delete_all
