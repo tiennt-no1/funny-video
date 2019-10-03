@@ -46,8 +46,8 @@
                 xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
             }
         }).done(function (response) {
-            debugger
             alert("you liked video")
+            location.reload(true)
         }).fail(function () {
             alert("error");
         })
@@ -62,6 +62,7 @@
             }
         }).done(function (response) {
             alert("you disliked video")
+            location.reload(true)
         }).fail(function () {
             alert("error");
         })
@@ -93,6 +94,6 @@
 
     $("i.clickable.fa-thumbs-o-up").on('click', likeable)
     $("i.clickable.fa-thumbs-o-down").on('click',dislikeable)
-    $("i.clickable.fa-thumbs-up").on('click',likeable)
-    $("i.clickable.fa-thumbs-down").on('click', dislikeable)
+    $("i.clickable.fa-thumbs-up").on('click',dislikeable)
+    $("i.clickable.fa-thumbs-down").on('click', likeable)
 </script>

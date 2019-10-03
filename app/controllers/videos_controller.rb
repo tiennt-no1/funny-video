@@ -4,7 +4,7 @@ class VideosController < ApplicationController
   before_action :remove_all_votes, only: %i[like dislike]
 
   def index
-    @videos = Video.all
+    @videos = Video.all.order(:created_at)
   end
 
   def like
@@ -26,7 +26,7 @@ class VideosController < ApplicationController
   private
 
   def remove_all_votes
-    @current_user.votes.where(video_id: @video.id).delete_all
+    @current_user.votes.where(video_id: params[:id]).delete_all
   end
 
   def find_video
