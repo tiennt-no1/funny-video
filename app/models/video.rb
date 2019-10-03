@@ -18,13 +18,14 @@ class Video < ApplicationRecord
   private
   def get_youtube_id_from_url
     if youtube_url.include? '?'
-      youtube_url.split('?').last.match(/v=([A-Za-z0-9]+)[&$]/)[1]
+      youtube_url.split('?').last.match(/v=([A-Za-z0-9_]+)[&$]/).try(:[],1)
     else
       youtube_url.split('/').last
     end
   end
 
   def format_url
+    raise ActiveRecord::RecordInvalid if get_youtube_id_from_url.blank?
     self.youtube_url = "https://www.youtube.com/embed/#{get_youtube_id_from_url}"
   end
 
