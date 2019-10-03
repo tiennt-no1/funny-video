@@ -1,9 +1,10 @@
 class VideosController < ApplicationController
-  before_action :authorize_request
+  before_action :authorize_request, except: :index
   before_action :find_video, only: %i[like dislike]
   before_action :remove_all_votes, only: %i[like dislike]
 
   def index
+    @current_user = Token.find_by(token: authorize_token)&.user if authorize_token
     @videos = Video.all.order(:created_at)
   end
 
