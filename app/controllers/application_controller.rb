@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
   def authorize_request
     token = authorize_token
     begin
-      # binding.pry
       Token.find_by!(token: token)
       @decoded = JsonWebToken.decode(token)
       @current_user = User.find(@decoded[:user_id])

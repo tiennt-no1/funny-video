@@ -16,12 +16,51 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
 
-
 </head>
 
 <body>
-  <div class="container">
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <a class="navbar-brand" href="/"> <i class="fa fa-play"></i> Funny movie</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse">
+      <%- if @current_user.present? %>
+        <div class="ml-auto">Welcome <b><%= @current_user.username %></b></div>
+        <form class="form-inline my-2 my-lg-0 ">
+          <button class="btn btn-primary my-2 mx-1 my-sm-0" data-toggle="modal" data-target="#insertVideoModal" type="button">Share
+            video
+          </button>
+          <button class="btn btn-danger my-2 mx-1 my-sm-0" data-toggle="modal" id="logout" type="button">Log out
+          </button>
+        </form>
+      <%- else %>
+        <%= link_to("Log in ", auth_new_path, class: "btn btn-primary my-2 mx-1 my-sm-0 ml-auto") %>
+      <%- end %>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="insertVideoModal" tabindex="-1" role="dialog" aria-labelledby="insertVideoLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="insertVideoLabel">Insert youtube video</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <%= render "videos/form" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="mt-4">
     <%= yield %>
   </div>
+</div>
 </body>
 </html>

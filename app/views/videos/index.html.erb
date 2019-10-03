@@ -1,34 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Funny movie</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
-  <div class="collapse navbar-collapse">
-    <div class="ml-auto">Welcome <b><%= @current_user.username %></b></div>
-    <form class="form-inline my-2 my-lg-0 ">
-      <button class="btn btn-primary my-2 mx-1 my-sm-0"  data-toggle="modal" data-target="#insertVideoModal" type="button">Share video</button>
-      <%= link_to("Log out ", auth_logout_path, method: :delete, class: "btn btn-primary my-2 mx-1 my-sm-0") %>
-    </form>
-  </div>
-
-  <!-- Modal -->
-  <div class="modal fade" id="insertVideoModal" tabindex="-1" role="dialog" aria-labelledby="insertVideoLabel" >
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="insertVideoLabel">Insert youtube video</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <%= render "videos/form" %>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
 
 <div class="container-fluid mt-3">
   <%- @videos.each do |video| %>
@@ -116,4 +86,20 @@
     $("i.clickable.fa-thumbs-o-down").on('click',dislikeable)
     $("i.clickable.fa-thumbs-up").on('click',dislikeable)
     $("i.clickable.fa-thumbs-down").on('click', likeable)
+
+    $("#logout").on('click', () => {
+        $.ajax({
+            url: `/auth/logout`,
+            method: "delete",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
+            }
+        }).done(function (response) {
+            notify_success()
+            Cookies.remove('access-token')
+            location.reload(true)
+        }).fail(function () {
+            notify_error()
+        })
+    })
 </script>

@@ -17,7 +17,7 @@ class AuthenticationController < ApplicationController
   end
 
   def logout
-    Token.find_by!(token: authorize_header).delete
+    Token.find_by!(token: authorize_token).delete
     render json: {message: 'success'}, status: :ok
   end
 
