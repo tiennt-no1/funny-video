@@ -38,6 +38,26 @@
 
 
 <script type="text/javascript" charset="utf-8">
+
+    const notify_success = () => {
+        Swal.fire({
+            type: 'success',
+            title: 'successfully',
+            showConfirmButton: false,
+            timer: 500
+        })
+    }
+
+    const notify_error = () => {
+        Swal.fire({
+            type: 'error',
+            title: 'unexpected error',
+            showConfirmButton: false,
+            timer: 500
+        })
+    }
+
+
     function like(video_id) {
         $.ajax({
             url: `/videos/${video_id}/like`,
@@ -46,10 +66,10 @@
                 xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
             }
         }).done(function (response) {
-            alert("you liked video")
+            notify_success()
             location.reload(true)
         }).fail(function () {
-            alert("error");
+            notify_error()
         })
     }
 
@@ -61,10 +81,10 @@
                 xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
             }
         }).done(function (response) {
-            alert("you disliked video")
+            notify_success()
             location.reload(true)
         }).fail(function () {
-            alert("error");
+            notify_error()
         })
     }
 
