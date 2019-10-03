@@ -1,5 +1,5 @@
 RSpec.describe 'Register new user', type: :feature, js: true do
-  let (:user) {build :user}
+  let (:user) { build :user }
   scenario 'valid inputs' do
     visit new_user_path
     fill_in 'user_username', with: user.username
@@ -48,7 +48,6 @@ RSpec.describe 'Register new user', type: :feature, js: true do
       expect(page).to have_selector('h2.swal2-title', text: "Password confirmation doesn't match Password")
     end
   end
-
 
 
 end
