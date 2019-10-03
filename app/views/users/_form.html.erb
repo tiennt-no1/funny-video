@@ -31,10 +31,10 @@
             Swal.fire({
                 type: 'success',
                 title: 'successfully',
-                showConfirmButton: false,
-                timer: 500
+                onClose: () => {
+                  location.replace("/auth/new")
+                }
             })
-            location.reload(true)
 
         }).fail(function (error) {
             let messages = JSON.parse (error.responseText).errors
