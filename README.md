@@ -1,24 +1,39 @@
 # README
+This is a small application to share video by copy link from youtube then insert to database.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+* Ruby version 2.5.1, rails 5.1.6
 
-* Ruby version
+How to run app:
+* clone app, run `bundle` to install missing gem
 
-* System dependencies
+* init database first time by: `rake db:init && rake db:migrate`
 
-* Configuration
+* run webpack: `./bin/webpack-dev-server` or `./bin/webpack`
 
-* Database creation
+* run test: `rspec`, may you have to config and install selenium to run capybara automation test
 
-* Database initialization
+* run rails server: `rails s`
 
-* How to run the test suite
+all api: 
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+| Verb   | URI Pattern                      | Controller#Action          |
+|--------|----------------------------------|----------------------------|
+| GET    | /users(.:format)                 | users#index                |
+| POST   | /users(.:format)                 | users#create               |
+| GET    | /users/new(.:format)             | users#new                  |
+| GET    | /users/:_username/edit(.:format) | users#edit                 |
+| GET    | /users/:_username(.:format)      | users#show                 |
+| PUT    | /users/:_username(.:format)      | users#update               |
+| PATCH  | /users/:_username(.:format)      | users#update               |
+| DELETE | /users/:_username(.:format)      | users#destroy              |
+| POST   | /auth/login(.:format)            | authentication#login       |
+| DELETE | /auth/logout(.:format)           | authentication#logout      |
+| GET    | /auth/new(.:format)              | authentication#new_session |
+| PUT    | /videos/:id/like(.:format)       | videos#like                |
+| PUT    | /videos/:id/dislike(.:format)    | videos#dislike             |
+| GET    | /videos(.:format)                | videos#index               |
+| POST   | /videos(.:format)                | videos#create              |
+| GET    | /videos/new(.:format)            | videos#new                 |
+| GET    | /                                | videos#index               |
+| GET    | /*a(.:format)                    | application#not_found      |
