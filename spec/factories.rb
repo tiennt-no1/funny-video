@@ -7,12 +7,11 @@ FactoryBot.define do
   end
 
   factory :video do
-    youtube_url { "https://www.youtube.com/watch?v=g1jun_V1o2E" }
+    youtube_url { "https://www.youtube.com/watch?v=TEEstkKUsGk".gsub("\u0000", '') }
     title { Faker::Name.name }
     desc { Faker::String.random(100) }
   end
 
   factory :token
-
   factory :vote
 end

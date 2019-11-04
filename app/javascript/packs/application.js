@@ -16,12 +16,11 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-
-import 'jquery'
+window.jQuery = window.$ = require('jquery')
+window.Swal = require('sweetalert2')
+window.Cookies = require('js-cookie')
 import 'popper.js'
 import 'bootstrap'
 import 'axios'
-import 'js-cookie'
-import 'sweetalert2'
 import '../stylesheet/application'
 

@@ -8,98 +8,101 @@
 
 
 <script type="text/javascript" charset="utf-8">
+    document.addEventListener("turbolinks:load", function() {
+        const notify_success = () => {
+            Swal.fire({
+                type: 'success',
+                title: 'successfully',
+                showConfirmButton: false,
+                timer: 500
+            })
+        }
 
-    const notify_success = () => {
-        Swal.fire({
-            type: 'success',
-            title: 'successfully',
-            showConfirmButton: false,
-            timer: 500
-        })
-    }
-
-    const notify_error = () => {
-        Swal.fire({
-            type: 'error',
-            title: 'unexpected error',
-            showConfirmButton: false,
-            timer: 500
-        })
-    }
+        const notify_error = () => {
+            Swal.fire({
+                type: 'error',
+                title: 'unexpected error',
+                showConfirmButton: false,
+                timer: 500
+            })
+        }
 
 
-    function like(video_id) {
-        $.ajax({
-            url: `/videos/${video_id}/like`,
-            method: "put",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
-            }
-        }).done(function (response) {
-            notify_success()
-            location.reload(true)
-        }).fail(function () {
-            notify_error()
-        })
-    }
+        function like(video_id) {
+            $.ajax({
+                url: `/videos/${video_id}/like`,
+                method: "put",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
+                }
+            }).done(function (response) {
+                notify_success()
+                location.reload(true)
+            }).fail(function () {
+                notify_error()
+            })
+        }
 
-    function dislike(video_id) {
-        $.ajax({
-            url: `/videos/${video_id}/dislike`,
-            method: "put",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
-            }
-        }).done(function (response) {
-            notify_success()
-            location.reload(true)
-        }).fail(function () {
-            notify_error()
-        })
-    }
+        function dislike(video_id) {
+            $.ajax({
+                url: `/videos/${video_id}/dislike`,
+                method: "put",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
+                }
+            }).done(function (response) {
+                notify_success()
+                location.reload(true)
+            }).fail(function () {
+                notify_error()
+            })
+        }
 
-    let likeable = event => {
-        $this = $(event.target)
-        $this.removeClass("fa-thumbs-o-up")
-        $this.removeClass("fa-thumbs-down")
-        $this.addClass("fa-thumbs-up")
-        $this.siblings().remove()
-        $this.unbind('click', likeable)
-        $this.bind('click', dislikeable)
-        let video_id = $this.parent().closest('div').attr('data')
-        like(video_id)
-    }
+        let likeable = event => {
+            $this = $(event.target)
+            $this.removeClass("fa-thumbs-o-up")
+            $this.removeClass("fa-thumbs-down")
+            $this.addClass("fa-thumbs-up")
+            $this.siblings().remove()
+            $this.unbind('click', likeable)
+            $this.bind('click', dislikeable)
+            let video_id = $this.parent().closest('div').attr('data')
+            like(video_id)
+        }
 
-    let dislikeable = event => {
-        $this = $(event.target)
-        $this.removeClass("fa-thumbs-o-down")
-        $this.removeClass("fa-thumbs-up")
-        $this.addClass("fa-thumbs-down")
-        $this.siblings().remove()
-        $this.unbind('click', dislikeable)
-        $this.bind('click', likeable)
-        let video_id = $this.parent().closest('div').attr('data')
-        dislike(video_id)
-    }
+        let dislikeable = event => {
+            $this = $(event.target)
+            $this.removeClass("fa-thumbs-o-down")
+            $this.removeClass("fa-thumbs-up")
+            $this.addClass("fa-thumbs-down")
+            $this.siblings().remove()
+            $this.unbind('click', dislikeable)
+            $this.bind('click', likeable)
+            let video_id = $this.parent().closest('div').attr('data')
+            dislike(video_id)
+        }
 
-    $("i.clickable.fa-thumbs-o-up").on('click', likeable)
-    $("i.clickable.fa-thumbs-o-down").on('click',dislikeable)
-    $("i.clickable.fa-thumbs-up").on('click',dislikeable)
-    $("i.clickable.fa-thumbs-down").on('click', likeable)
+        $("i.clickable.fa-thumbs-o-up").on('click', likeable)
+        $("i.clickable.fa-thumbs-o-down").on('click',dislikeable)
+        $("i.clickable.fa-thumbs-up").on('click',dislikeable)
+        $("i.clickable.fa-thumbs-down").on('click', likeable)
 
-    $("#logout").on('click', () => {
-        $.ajax({
-            url: `/auth/logout`,
-            method: "delete",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
-            }
-        }).done(function (response) {
-            notify_success()
-            Cookies.remove('access-token')
-            location.reload(true)
-        }).fail(function () {
-            notify_error()
+        $("#logout").on('click', () => {
+            $.ajax({
+                url: `/auth/logout`,
+                method: "delete",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader ("Authorization", `Basic ${Cookies.get('access-token')}` )
+                }
+            }).done(function (response) {
+                notify_success()
+                Cookies.remove('access-token')
+                location.reload(true)
+            }).fail(function () {
+                notify_error()
+            })
         })
     })
+
+
 </script>

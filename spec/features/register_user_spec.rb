@@ -6,9 +6,6 @@ RSpec.describe 'Register new user', type: :feature, js: true do
     fill_in 'user_password', with: user.password
     fill_in 'user_password_confirmation', with: user.password
     click_button 'register'
-    wait_for_ajax
-    expect(page).to have_selector('h2.swal2-title', text: 'successfully')
-    find('button.swal2-confirm').click
     expect(page).to have_current_path(auth_new_path)
 
   end
