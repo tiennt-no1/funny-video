@@ -7,7 +7,9 @@ This is a small application to share video by copy link from youtube then insert
 How to run app:
 * clone app, run `bundle` to install missing gem
 
-* init database first time by: `rake db:init && rake db:migrate`
+* init database first time by: `rake db:create && rake db:migrate`
+
+* install missing npm package by: `yarn install`
 
 * run webpack: `./bin/webpack-dev-server` or `./bin/webpack`
 
