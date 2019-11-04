@@ -20,4 +20,8 @@ require("channels")
 import 'jquery'
 import 'popper.js'
 import 'bootstrap'
+import 'axios'
+import 'js-cookie'
+import 'sweetalert2'
 import '../stylesheet/application'
+
